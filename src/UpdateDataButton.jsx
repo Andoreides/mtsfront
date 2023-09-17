@@ -1,25 +1,22 @@
-import React from 'react';
 import axios from 'axios';
+import './App.css'
+import API_URL from "./apiConfig";
 
-function UpdateDataButton({ onUpdate }) {
-    const handleUpdateClick = () => {
-        // Отправить POST-запрос на сервер для обновления данных
-        axios.post('/api/update-data') // Подставьте реальный URL вашего бэкенд-сервера
-            .then(response => {
-                console.log('Данные успешно обновлены.');
-                // Вызовите колбэк функцию onUpdate после успешного обновления данных
-                if (onUpdate) {
-                    onUpdate();
-                }
+const UpdateDataButton = ({ onUpdate }) => {
+    const handleUpdate = () => {
+        axios.get(`${API_URL}/api/tariffs`)
+            .then(() => {
+                console.log('Данные успешно обновлены');
+                onUpdate();
             })
-            .catch(error => {
-                console.error('Ошибка при обновлении данных:', error);
+            .catch((error) => {
+                console.error('Произошла ошибка при обновлении данных:', error);
             });
     };
 
     return (
-        <button onClick={handleUpdateClick}>Парсить</button>
+        <button className={'button__parse'} onClick={handleUpdate}>Парсить</button>
     );
-}
+};
 
 export default UpdateDataButton;

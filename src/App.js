@@ -1,25 +1,28 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import TariffTable from './TariffTable';
+import UpdateDataButton from './UpdateDataButton';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+    const [dataUpdated, setDataUpdated] = useState(false);
+
+    const handleUpdate = () => {
+        setDataUpdated(true);
+    };
+
+    useEffect(() => {
+        if (dataUpdated) {
+            window.location.reload();
+        }
+    }, [dataUpdated]);
+
+    return (
+        <div className={'App'}>
+            <h1 className={'app__title'}>Тарифы МТС</h1>
+            <UpdateDataButton onUpdate={handleUpdate} />
+            <TariffTable />
+        </div>
+    );
+};
 
 export default App;
